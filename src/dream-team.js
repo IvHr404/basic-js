@@ -16,6 +16,11 @@ const { NotImplementedError } = require('../extensions/index.js');
 function createDreamTeam(dream) {
   nameDream = '';
 
+  if(typeof dream !== 'object' || dream === undefined || dream === null || !Array.isArray(dream)){
+    return false;
+  }
+
+
   let arr = dream.filter((num) => {
     if(typeof num !== "number" 
     && typeof num !== "object" 
@@ -24,7 +29,7 @@ function createDreamTeam(dream) {
     }
   });
 
-  arr = Array.from(arr, x => x.trim());
+  arr = Array.from(arr, x => x.trim().toUpperCase());
   arr.sort();
   arr.forEach((el) => nameDream += el.toUpperCase().charAt(0));
 
