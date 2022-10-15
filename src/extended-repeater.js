@@ -17,13 +17,22 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 function repeater( str, options) {
   let addStr = '';
+  str = `${str}`;
 
-  addStr = addStr.concat(options.addition, options.additionSeparator);
-  addStr = addStr.repeat(options.additionRepeatTimes);
-  addStr = addStr.slice(0, addStr.length - options.additionSeparator.length);
-  str = str.concat(addStr, options.separator);
-  str = str.repeat(options.repeatTimes);
-  str = str.slice(0, str.length - options.separator.length);
+  let opt = {
+    repTime : options.repeatTimes === undefined ? 1 : options.repeatTimes,
+    separ : `${options.separator}` === '' ? '+' : `${options.separator}`,
+    add : `${options.addition}` === '' ? '': `${options.addition}`,
+    addRepTime : options.additionRepeatTimes === undefined ? 1 : options.additionRepeatTimes,
+    addSeparator : `${options.additionSeparator}` === '' ? '|' : `${options.additionSeparator}`,
+  };
+
+  addStr = addStr.concat(opt.add, opt.addSeparator);
+  addStr = addStr.repeat(opt.addRepTime);
+  addStr = addStr.slice(0, addStr.length - opt.addSeparator.length);
+  str = str.concat(addStr, opt.separ);
+  str = str.repeat(opt.repTime);
+  str = str.slice(0, str.length - opt.separ.length);
 
   return str;
 }
