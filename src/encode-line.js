@@ -36,6 +36,3 @@ function encodeLine(str) {
 module.exports = {
   encodeLine
 };
-
-console.log(encodeLine('aabbbc'));
-console.log(encodeLine('abbbacc'));
