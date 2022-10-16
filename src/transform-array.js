@@ -25,13 +25,15 @@ function transform(arr) {
     switch (arr[i]) {
       case discard_next:
         if((i + 1) < arr.length) {
-          newArr.push();
-          //i++;
+          //newArr.push();
+          i++;
         }
         break;
       case discard_prev:
         if((i - 1) >= 0) {
-          newArr.pop();
+          if(arr[i - 1] !== discard_next) {
+            newArr.pop();
+          }
         }
         break;
       case double_next:
@@ -41,7 +43,12 @@ function transform(arr) {
         break;
       case double_prev:
         if((i - 1) >= 0) {
-          newArr.push(arr[i - 1]);
+          if(arr[i - 1] === discard_next) {
+            newArr.push(arr[i - 1]);
+          }
+          else {
+            newArr.push(newArr.pop());
+          }
         }
         break;
     
@@ -59,7 +66,6 @@ module.exports = {
   transform
 };
 
-console.log(transform([1, 2, 3, '--discard-next', 1337, '--double-prev', 4, 5]), '===', [1, 2, 3, 4, 5]);
-console.log(transform([1, 2, 3, '--discard-next', 1337, '--discard-prev', 4, 5]), '===', [1, 2, 3, 4, 5]);
-console.log(transform([1, 2, 3, '--double-next', 1337, '--discard-prev', 4, 5]), [1, 2, 3, 1337, 4, 5]);
-console.log(transform([1, 2, 3, '--double-next', 1337, '--double-prev', 4, 5]), [1, 2, 3, 1337, 1337, 1337, 4, 5]);
+console.log(transform([1, 2, 3, '--discard-next', 1337, '--double-prev', 4, 5]));
+console.log(transform([1, 2, 3, '--discard-next', 1337, '--discard-prev', 4, 5]));
+console.log(transform([1, 2, 3, '--double-next', 1337, '--double-prev', 4, 5]));
